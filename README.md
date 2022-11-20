@@ -175,6 +175,14 @@ npm start
 ```
  Then open your browser and go to `http://localhost:3000` or use postman
  
+ ##
+ 
+ ## PostgresSQL DataBase Port 
+ PORT 4000
+ ## Server Port 
+ PORT 3000
+
+
 ## Authors
 
 - [@BarahAbdullah](https://github.com/BaraahAbdullah)
