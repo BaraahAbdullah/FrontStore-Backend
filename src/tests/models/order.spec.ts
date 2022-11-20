@@ -6,6 +6,9 @@ describe('Order Model', () => {
   it('should have a create method', () => {
     expect(order.create).toBeDefined()
   })
+   it('should have a show method', () => {
+    expect(order.show).toBeDefined()
+  })
 
   // it('create method should create new order with new associated order_product', async () => {
   //   const orderProduct = { product_id: 1, quantity: 1 }
