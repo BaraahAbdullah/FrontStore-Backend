@@ -62,35 +62,35 @@ describe('Product Model', () => {
 
     result.forEach((returnedProduct) => {
       const { id, ...productInfo } = returnedProduct
-      expect(productInfo.name).toBeDefined()
-      expect(productInfo.price).toBeDefined()
-    })
-    // expect(result).toEqual([
-    //   {
-    //     id: 1,
-    //     name: 'new product',
-    //     price: 250,
-    //     category: 'product type'
-    //   },
-    //   {
-    //     id: 2,
-    //     name: 'new product',
-    //     price: 250,
-    //     category: 'product type'
-    //   },
-    //   {
-    //     id: 3,
-    //     name: 'new product',
-    //     price: 250,
-    //     category: 'product type'
-    //   },
-    //   {
-    //     id: 4,
-    //     name: 'new product',
-    //     price: 250,
-    //     category: 'product type'
-    //   }
-    // ])
+      //expect(productInfo.name).toBeDefined()
+      //expect(productInfo.price).toBeDefined()
+   // })
+    expect(result).toEqual([
+      {
+        id: 1,
+        name: 'new product',
+        price: 250,
+        category: 'product type'
+      },
+      {
+        id: 2,
+        name: 'new product',
+        price: 250,
+        category: 'product type'
+      },
+      {
+        id: 3,
+        name: 'new product',
+        price: 250,
+        category: 'product type'
+      },
+      {
+        id: 4,
+        name: 'new product',
+        price: 250,
+        category: 'product type'
+      }
+    ])
   })
 
   it('show method should return the correct product', async () => {
