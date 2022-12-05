@@ -1,54 +1,72 @@
 import bcrypt from 'bcrypt'
-import { User, UserDBModel } from '../../models/user'
+import { User, UserModel } from '../../models/user';
 import appConfig from '../../config/app.config'
 
-const user = new UserDBModel()
-let userObj: User
 
-describe('User Model', () => {
-  it('should have an index method', () => {
-    expect(user.index).toBeDefined()
-  })
+const usersModel = new UserModel();
+const testUser: User = {
+    first_name: 'Alaa',
+    last_name: 'Alaraby',
+    password: '2022#alaa'
+};
+let expectedUser: User;
 
-  it('should have a show method', () => {
-    expect(user.show).toBeDefined()
-  })
+// describe("Testing user model", () => {
+//     it('should have an index method', () => {
+//         expect(usersModel.index).toBeDefined();
+//     });
+//     it('should have a show method', () => {
+//         expect(usersModel.show).toBeDefined();
+//     });
+//     it('should have a create method', () => {
+//         expect(usersModel.create).toBeDefined();
+//     });
 
-  it('should have a create method', () => {
-    expect(user.create).toBeDefined()
-  })
+//     it('should have a update method', () => {
+//         expect(usersModel.update).toBeDefined();
+//     });
 
-  it('create method should add a new user', async () => {
-    userObj = await user.create('firstName', 'lastName', 'password')
-    const comparePass = bcrypt.compareSync(`password${appConfig.bcryptPaper}`, userObj.password)
-    expect(comparePass).toEqual(true)
-    const { id, ...testUserObj } = userObj
-    expect(testUserObj).toEqual({
-      firstname: 'firstName',
-      lastname: 'lastName',
-      password: testUserObj.password
-    })
-  })
+//     it('should have a delete method', () => {
+//         expect(usersModel.delete).toBeDefined();
+//     });
 
-  it('show method should return user by id', async () => {
-    const result = await user.show(userObj.id as number)
-    expect(result).toEqual(userObj)
-  })
 
-  it('index method should return a list of users', async () => {
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < 4; i++) {
-      // eslint-disable-next-line no-await-in-loop
-      await user.create('firstName', 'lastName', 'password')
-    }
-    const result = await user.index()
-    // expect(result.length).toEqual(5)
+    it('should CREATE a user using create method', async () => {
+        expectedUser = await usersModel.create(testUser);
+        expect({
+            first_name: expectedUser.first_name,
+            last_name: expectedUser.last_name,
+            password: expectedUser.password
+        }).toEqual({
+            first_name: testUser.first_name,
+            last_name: testUser.last_name,
+            password: testUser.password,
+        });
+    });
 
-    result.forEach((returnedUser) => {
-      const { id, ...userInfo } = returnedUser
-      expect(userInfo.firstname).toBeDefined()
-      expect(userInfo.lastname).toBeDefined()
-      expect(userInfo.password).toBeDefined()
-    })
-  })
+    it('should INDEX all users using index method', async () => {
+        const usersList: User[] = await usersModel.index();
+        expect(usersList.length).toBeGreaterThan(0);
+    });
+
+    it('should SHOW user based on id using index method', async () => {
+        const user = await usersModel.show(expectedUser.user_id as number);
+        expect(user).toEqual(expectedUser);
+    });
+
+    it('should UPDATE user using update method', async () => {
+        const user = await usersModel.update(expectedUser.user_id as number, expectedUser.password);
+        expect({
+            password: user.password
+        }).toEqual({
+            password: expectedUser.password
+        });
+    });
+
+    it('should DELETE user using delete method', async () => {
+        const deletedUser = await usersModel.delete(expectedUser.user_id as number);
+        expect(deletedUser.user_id).toEqual(expectedUser.user_id);
+    });
+
+});
 })
