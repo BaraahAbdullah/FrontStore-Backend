@@ -13,6 +13,6 @@ describe('Order Model', () => {
   it('create method should create new order with new associated order_product', async () => {
     const orderProduct = { product_id: 1, quantity: 1 }
     const result = await order.create('active', 2, [orderProduct])
-    expect(result).toEqual([])
+    expect(result).toEqual([orderProduct])
   })
 })
